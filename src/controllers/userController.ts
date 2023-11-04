@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 
 import {
   IUser,
-  UserModal,
+  UserModel,
   TypedUser,
 } from "../models/userModel";
 
@@ -20,7 +20,7 @@ export const getAllUsers = catchAsync(
     res: Response,
     next: NextFunction
   ) => {
-    const users = await UserModal.find();
+    const users = await UserModel.find();
 
     res.status(200).json({
       status: "success",
@@ -37,7 +37,7 @@ export const getUserById = catchAsync(
     res: Response,
     next: NextFunction
   ) => {
-    const user: TypedUser | null = await UserModal.findById(
+    const user: TypedUser | null = await UserModel.findById(
       req.params.id
     );
 

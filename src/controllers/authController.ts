@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../utils/catchAsync";
-import { IUser, UserModal } from "../models/userModel";
+import { IUser, UserModel } from "../models/userModel";
 import AppError from "../utils/appError";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -87,7 +87,7 @@ export const register = catchAsync(
       phoneNumber,
     } = req.body;
 
-    const newUser = await UserModal.create({
+    const newUser = await UserModel.create({
       email,
       name,
       password,
@@ -124,7 +124,7 @@ export const login = catchAsync(
       );
 
     //2) Check if user exists && password is correct
-    const user = await UserModal.findOne({ email }).select(
+    const user = await UserModel.findOne({ email }).select(
       "+password"
     );
 
@@ -180,10 +180,8 @@ export const protectedRoute = catchAsync(
       process.env.JWT_SECRET!
     );
 
-    console.log(decoded);
-
     //3) Check if user still exists
-    const currentUser = await UserModal.findById(
+    const currentUser = await UserModel.findById(
       decoded.id
     );
 
